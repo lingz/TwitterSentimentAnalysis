@@ -10,6 +10,7 @@
     <orderEntry type="library" name="stanford-corenlp-3.3.1" level="project" />
     <orderEntry type="library" name="stanford-corenlp-3.3.1-models" level="project" />
     <orderEntry type="library" name="ejml-0.23" level="project" />
+    <orderEntry type="library" name="twitter4j-core-4.0.1" level="project" />
   </component>
 </module>
 

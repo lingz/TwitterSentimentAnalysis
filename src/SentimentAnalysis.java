@@ -1,10 +1,7 @@
 import edu.stanford.nlp.ling.CoreAnnotations;
-import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import edu.stanford.nlp.semgraph.SemanticGraph;
-import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations;
 import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
@@ -21,6 +18,7 @@ import java.util.Properties;
 public class SentimentAnalysis {
 
     public static int findSentiment(String text) {
+        int overallSentiment = 0;
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
@@ -31,36 +29,35 @@ public class SentimentAnalysis {
         Annotation annotation = pipeline.process(text);
         List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
         for (CoreMap sentence : sentences) {
-            System.out.println("This is the coremap");
-            System.out.println(sentence.toString());
-            for (CoreLabel token: sentence.get(CoreAnnotations.TokensAnnotation.class)) {
-                // this is the text of the token
-                String word = token.get(CoreAnnotations.TextAnnotation.class);
-                // this is the POS tag of the token
-                String pos = token.get(CoreAnnotations.PartOfSpeechAnnotation.class);
-                // this is the NER label of the token
-                String ne = token.get(CoreAnnotations.NamedEntityTagAnnotation.class);
-                System.out.println(word);
-                System.out.println(pos);
-                System.out.println(ne);
-            }
 
             Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
-            System.out.println(tree.toString());
 
-            int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
+            int sentiment = RNNCoreAnnotations.getPredictedClass(tree) - 2;
+            System.out.println(sentence.toString());
             System.out.println(sentiment);
 
-
-
-            SemanticGraph dependencies = sentence.get(SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation.class);
-            System.out.println(dependencies.toString());
-
+            overallSentiment += sentiment;
 
         }
 
 
-        return 1;
+        return overallSentiment;
+
+    }
+
+    public static String cleanText(String text) {
+        String output = "";
+
+        for (int i = 0; i < text.length(); i++) {
+            Character c = text.charAt(i);
+            if (Character.isLetterOrDigit(c) || Character.isWhitespace(c) ||
+                c == '"' || c == ',' || c == '\'') {
+                output += c;
+            }
+
+        }
+        return output;
+
 
     }
 }
