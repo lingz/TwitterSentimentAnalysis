@@ -1,0 +1,8 @@
+data/filtered_egypt_government_results.json added to analysis path
+data/filtered_pakistan_government_results.json added to analysis path
+data/filtered_iran_government_results.json added to analysis path
+data/filtered_turkey_government_results.json added to analysis path
+Starting thread
+Starting thread
+Starting thread
+Starting thread

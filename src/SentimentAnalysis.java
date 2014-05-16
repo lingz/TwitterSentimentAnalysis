@@ -5,6 +5,7 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
+import edu.stanford.nlp.util.logging.RedwoodConfiguration;
 
 import java.util.List;
 import java.util.Properties;
@@ -16,13 +17,22 @@ import java.util.Properties;
 
 
 public class SentimentAnalysis {
+    private static StanfordCoreNLP pipeline;
+
+    public static void buildAnalyzer() {
+        if (!Main.verbose)
+            RedwoodConfiguration.empty().capture(System.err).apply();
+        Properties props = new Properties();
+        props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment");
+        pipeline = new StanfordCoreNLP(props);
+        if (!Main.verbose)
+            RedwoodConfiguration.current().clear().apply();
+    }
 
     public static int findSentiment(String rawText) {
         String text = cleanText(rawText);
         int overallSentiment = 0;
-        Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment");
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+
 
         if (text == null || text.length() == 0)
             return 0;
@@ -34,8 +44,6 @@ public class SentimentAnalysis {
             Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
 
             int sentiment = RNNCoreAnnotations.getPredictedClass(tree) - 2;
-            System.out.println(sentence.toString());
-            System.out.println(sentiment);
 
             overallSentiment += sentiment;
 

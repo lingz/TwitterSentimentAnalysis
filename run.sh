@@ -1,0 +1,1 @@
+java -cp vendor/json-simple-1.1.1.jar:vendor/stanford-corenlp-full-2014-01-04/stanford-corenlp-3.3.1.jar:vendor/stanford-corenlp-full-2014-01-04/stanford-corenlp-3.3.1-models.jar:vendor/stanford-corenlp-full-2014-01-04/ejml-0.23.jar:out/production/SentimentAnalysis/ Main $@
