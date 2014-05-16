@@ -17,7 +17,8 @@ import java.util.Properties;
 
 public class SentimentAnalysis {
 
-    public static int findSentiment(String text) {
+    public static int findSentiment(String rawText) {
+        String text = cleanText(rawText);
         int overallSentiment = 0;
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref, sentiment");
@@ -45,7 +46,7 @@ public class SentimentAnalysis {
 
     }
 
-    public static String cleanText(String text) {
+    private static String cleanText(String text) {
         String output = "";
 
         for (int i = 0; i < text.length(); i++) {
