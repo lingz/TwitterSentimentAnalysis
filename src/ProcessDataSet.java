@@ -16,7 +16,8 @@ public class ProcessDataSet extends Thread {
             analyzedData.writeoutData();
             long time = System.nanoTime() - start;
             if (Main.timed)
-                System.out.println("Processing of " + dataSetPath.getFileName() + " finished in " + time / 1000000 + " seconds");
+                System.out.println("Processing of " + dataSetPath.getFileName() + " finished in " + time / 1000000000 +
+                        " seconds");
         } catch (Exception e) {
             System.out.println(e);
         }

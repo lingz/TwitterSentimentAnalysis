@@ -57,7 +57,7 @@ public class TwitterDataset {
     }
 
     private void process_tweet_sentiment() {
-        for (int days_after_event = -30; days_after_event < -29; days_after_event++) {
+        for (int days_after_event = -30; days_after_event < 31; days_after_event++) {
             ArrayList<Tweet> tweets = tweetMap.get(days_after_event);
             Integer[] sentimentCounts = {0, 0, 0};
             Integer[] sentimentWeights = {0, 0, 0};
@@ -97,9 +97,9 @@ public class TwitterDataset {
     public void writeoutData(Path filepath) throws IOException {
         FileWriter fileWriter = new FileWriter(filepath.toAbsolutePath().toString());
         BufferedWriter writer = new BufferedWriter(fileWriter);
-        writer.write("Days After Event,Number of Tweets,Negative Tweets, Positive Tweets,Negative,Positive Proportion," +
+        writer.write("Days After Event,Number of Tweets,Negative Tweets, Neutral Tweets,Positive Tweets,Positive Proportion," +
                 "Total Weight,Negative Weight,Neutral Weight,Positive Weight,Positive Weight Proportion\n");
-        for (int days_after_event = -30; days_after_event < -29; days_after_event++) {
+        for (int days_after_event = -30; days_after_event < 31; days_after_event++) {
             writer.write(days_after_event + ",");
 
             int numberOfTweets = tweetCountMap.get(days_after_event);
