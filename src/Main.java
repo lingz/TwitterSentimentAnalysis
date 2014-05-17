@@ -26,8 +26,6 @@ public class Main {
             }
         }
 
-        SentimentAnalysis.buildAnalyzer();
-
         for (Path dataFile : dataFiles) {
             System.out.println("Starting thread");
             (new ProcessDataSet(dataFile)).start();

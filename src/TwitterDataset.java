@@ -20,7 +20,6 @@ public class TwitterDataset {
     Map<Integer, Integer[]> tweetSentimentMap;
     Map<Integer, Integer[]> tweetSentimentWeightedMap;
     Path originalFilePath;
-    SentimentAnalysis SentimentAnalysis = new SentimentAnalysis();
 
     public TwitterDataset(Path filePath) throws IOException, org.json.simple.parser.ParseException {
         originalFilePath = filePath;
@@ -57,12 +56,13 @@ public class TwitterDataset {
     }
 
     private void process_tweet_sentiment() {
+        SentimentAnalysis sentimentAnalyzer = new SentimentAnalysis();
         for (int days_after_event = -30; days_after_event < 31; days_after_event++) {
             ArrayList<Tweet> tweets = tweetMap.get(days_after_event);
             Integer[] sentimentCounts = {0, 0, 0};
             Integer[] sentimentWeights = {0, 0, 0};
             for (Tweet tweet : tweets) {
-                int sentiment = SentimentAnalysis.findSentiment(tweet.content);
+                int sentiment = sentimentAnalyzer.findSentiment(tweet.content);
                 if (Main.verbose) {
                     System.out.println(tweet.content);
                     System.out.println(sentiment);

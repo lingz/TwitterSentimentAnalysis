@@ -19,7 +19,7 @@ import java.util.Properties;
 public class SentimentAnalysis {
     private static StanfordCoreNLP pipeline;
 
-    public static void buildAnalyzer() {
+    public SentimentAnalysis() {
         if (!Main.verbose)
             RedwoodConfiguration.empty().capture(System.err).apply();
         Properties props = new Properties();
@@ -29,7 +29,7 @@ public class SentimentAnalysis {
             RedwoodConfiguration.current().clear().apply();
     }
 
-    public static int findSentiment(String rawText) {
+    public int findSentiment(String rawText) {
         String text = cleanText(rawText);
         int overallSentiment = 0;
 
