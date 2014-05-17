@@ -65,6 +65,7 @@ public class TwitterDataset {
                 int sentiment = sentimentAnalyzer.findSentiment(tweet.content);
                 if (Main.verbose) {
                     System.out.println(tweet.content);
+                    System.out.println(tweet.retweets);
                     System.out.println(sentiment);
                 }
 
