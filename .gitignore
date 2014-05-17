@@ -1,4 +1,7 @@
 twitterkeys.txt
-data/*
+data/filtered*
+data/output/processed*
 vendor/stanford-corenlp-full-2014-01-04
 vendor/stanford-corenlp-full-2014-01-04.zip
+log.txt
+err.txt
