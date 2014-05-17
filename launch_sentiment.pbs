@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -V
+#PBS -l nodes=1:ppn=4,walltime=12:00:00
+#PBS -N SentimentAnalysis
+#PBS -M lz781@nyu.edu
+#PBS -m abe
+#PBS -e localhost:$PBS_O_WORKDIR/${PBS_JOBNAME}.e${PBS_JOBID}
+#PBS -o localhost:$PBS_O_WORKDIR/${PBS_JOBNAME}.o${PBS_JOBID}
+#PBS -q p12
+#PBS -l mem=20GB
+
+cd TwitterSentimentAnalysis
+nohup ./run.sh -v -t data/filtered_egypt_government_results.json data/filtered_pakistan_government_results.json data/filtered_iran_government_results.json data/filtered_turkey_government_results.json > logs.txt 2> err.txt
+
+exit 0;
